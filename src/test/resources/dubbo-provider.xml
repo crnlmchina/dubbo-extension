@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="cryo-test" logger="slf4j" />
+    
+    <dubbo:protocol name="dubbo" port="8080" />
+    
+    <!-- 在Spring启动后再暴露服务 -->
+    <dubbo:provider delay="-1" serialization="cryo" />
+    
+    <dubbo:registry protocol="zookeeper" address="cart-zoo1.dangdang.com:2181,cart-zoo2.dangdang.com:2181,cart-zoo3.dangdang.com:2181" client="curator"/>
+    
+    <bean id="someObjectService" class="yx.dubbo.extension.serialize.cryo.test.SomeObjectService"/>
+    
+    <dubbo:service timeout="3000" version="1.0" interface="yx.dubbo.extension.serialize.cryo.test.ISomeObjectService" ref="someObjectService"></dubbo:service>
+</beans>

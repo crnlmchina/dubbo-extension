@@ -66,8 +66,7 @@ public class CryoObjectInput implements ObjectInput {
 
 	@Override
 	public byte[] readBytes() throws IOException {
-		//TODO maybe some issue here
-		return kryo.readObject(input, String.class).getBytes();
+		return kryo.readObject(input, byte[].class);
 	}
 
 	@Override
