@@ -8,6 +8,4 @@ public interface ISomeObjectService {
 	
 	List<SomeObject> find(long[] ids);
 	
-	SomeObjectWithoutNoArgConstructor findNoArg(long id);
-
 }

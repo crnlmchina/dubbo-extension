@@ -2,15 +2,30 @@ package yx.dubbo.extension.serialize.cryo.test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import yx.dubbo.extension.serialize.cryo.custom.KryoCustom;
+import yx.dubbo.extension.serialize.cryo.custom.KryoRegister;
+
+import com.esotericsoftware.kryo.Kryo;
+
 public class CryoConsumerTest {
 
 	@Test
 	public void testConsumer() {
+		KryoRegister.register(new KryoCustom() {
+
+			@Override
+			public void custom(Kryo kryo) {
+				kryo.register(Map.class, new HashMapSerializer());
+				kryo.register(List.class, new ArrayListSerializer());
+				kryo.register(Arrays.asList("").getClass(), new ArrayListSerializer());
+			}
+		});
 		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("dubbo-consumer.xml")) {
 			ISomeObjectService serviceBean = context.getBean(ISomeObjectService.class);
 
@@ -33,16 +48,6 @@ public class CryoConsumerTest {
 			List<String> secondlist = second.getList();
 			Assert.assertEquals(3, secondlist.size());
 			Assert.assertEquals("c", secondlist.get(0));
-		}
-	}
-	
-	@Test
-	public void testConsumerNoArg() {
-		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("dubbo-consumer.xml")) {
-			ISomeObjectService serviceBean = context.getBean(ISomeObjectService.class);
-			
-			SomeObjectWithoutNoArgConstructor findNoArg = serviceBean.findNoArg(0);
-			Assert.assertEquals("Ha ha ha~", findNoArg.getSmile());
 		}
 	}
 

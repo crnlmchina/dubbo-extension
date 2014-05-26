@@ -35,9 +35,4 @@ public class SomeObjectService implements ISomeObjectService {
 		return Arrays.asList(someObject1, someObject2);
 	}
 
-	@Override
-	public SomeObjectWithoutNoArgConstructor findNoArg(long id) {
-		return new SomeObjectWithoutNoArgConstructor("Ha ha ha~");
-	}
-
 }
