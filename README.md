@@ -3,18 +3,19 @@ dubbo-extension
 
 Dubbo extension points implementation
 
+<p>Simple tutorial:</p>
 
-Simple tutorial:
-
+<pre><code>
 <dubbo:provider serialization="cryo" />
+</code></pre>
 
-
-Custom Kryo instance:
+<p>Custom Kryo instance:</p>
+<pre><code>
 KryoRegister.register(new KryoCustom() {
-
 	@Override
 	public void custom(Kryo kryo) {
 		kryo.register(Map.class, new HashMapSerializer());
 		kryo.register(List.class, new ArrayListSerializer());
 	}
 });
+</code></pre>
