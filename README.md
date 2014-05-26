@@ -5,9 +5,7 @@ Dubbo extension points implementation
 
 <p>Simple tutorial:</p>
 
-<pre><code>
-<dubbo:provider serialization="cryo" />
-</code></pre>
+`<dubbo:provider serialization="cryo" />`
 
 <p>Custom Kryo instance:</p>
 <pre><code>
